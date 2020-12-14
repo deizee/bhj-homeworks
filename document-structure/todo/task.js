@@ -1,18 +1,17 @@
 const addButton = document.getElementById('tasks__add');
 const input = document.getElementById('task__input');
 const tasksContainer = document.getElementById('tasks__list');
-const taskList = {};
+const taskList = [];
 
 document.addEventListener('DOMContentLoaded', onLoad);
 addButton.addEventListener('click', onAddBtnClick);
 tasksContainer.addEventListener('click', onTaskContainerClick);
 
 function onLoad() {
-    let obj = localStorage.getItem('myTaskList');
-    obj = obj ? JSON.parse(obj) : {};
-    Object.values(obj).forEach(el => {
-        const {id, text} = el;
-        const taskTemplate = createTaskTemplate(text, id);
+    let list = localStorage.getItem('myTaskList');
+    list = list ? JSON.parse(list) : [];
+    list.forEach(el => {
+        const taskTemplate = createTaskTemplate(el);
         tasksContainer.insertAdjacentHTML('afterbegin', taskTemplate);
     })
 }
@@ -20,21 +19,20 @@ function onLoad() {
 function onAddBtnClick(e) {
     e.preventDefault();
     if (!input.value) return;
-    const taskId = Date.now();
-    addTack(input.value, taskId);
+    addTack(input.value);
     input.value = '';
 }
 
-function addTack(taskText, taskId) {
-    const taskTemplate = createTaskTemplate(taskText, taskId);
+function addTack(taskText) {
+    const taskTemplate = createTaskTemplate(taskText);
     tasksContainer.insertAdjacentHTML('afterbegin', taskTemplate);
-    addTaskToLocalStorage(taskText, taskId);
+    addTaskToLocalStorage(taskText);
 }
 
-function createTaskTemplate(text, id) {
+function createTaskTemplate(text) {
     return `
         <div class="task">
-            <div class="task__title" data-id="${id}">
+            <div class="task__title"">
                 ${text}
             </div>
             <a href="#" class="task__remove">&times;</a>
@@ -45,24 +43,23 @@ function createTaskTemplate(text, id) {
 function onTaskContainerClick(e) {
     if (!e.target.classList.contains('task__remove')) return;
     const parent = e.target.closest('.task');
-    const id = parent.querySelector('.task__title').dataset.id;
+    const taskText = parent.querySelector('.task__title').innerText;
     parent.remove();
-    deleteTaskFromLokalStorage(id);
+    deleteTaskFromLoсalStorage(taskText);
 }
 
-function addTaskToLocalStorage(taskText, taskId) {
-    let obj = localStorage.getItem('myTaskList');
-    obj = obj ? JSON.parse(obj) : {};
-    obj[taskId] = {
-        id: taskId,
-        text: taskText,
-    };
-    localStorage.setItem('myTaskList', JSON.stringify(obj));
+function addTaskToLocalStorage(taskText) {
+    let list = localStorage.getItem('myTaskList');
+    list = list ? JSON.parse(list) : [];
+    list.push(taskText);
+    localStorage.setItem('myTaskList', JSON.stringify(list));
 }
 
-function deleteTaskFromLokalStorage(id) {
-    let obj = localStorage.getItem('myTaskList');
-    obj = obj ? JSON.parse(obj) : {};
-    delete obj[id];
-    localStorage.setItem('myTaskList', JSON.stringify(obj));
+function deleteTaskFromLoсalStorage(taskText) {
+    let list = localStorage.getItem('myTaskList');
+    list = list ? JSON.parse(list) : [];
+    list = list.filter(item => { 
+        return item !== taskText;
+    });
+    localStorage.setItem('myTaskList', JSON.stringify(list));
 }
