@@ -41,12 +41,12 @@ function onCuantityChange(target) {
     const quantityEl = parent.querySelector('.product__quantity-value');
     
     if (target.classList.contains('product__quantity-control_dec')) {
-        if (quantityEl.textContent != '1') {
-            quantityEl.textContent = +quantityEl.textContent - 1; 
+        if (quantityEl.innerText != '1') {
+            quantityEl.innerText = +quantityEl.innerText - 1; 
         } 
     }
     if (target.classList.contains('product__quantity-control_inc')) {
-        quantityEl.textContent = +quantityEl.textContent + 1;
+        quantityEl.innerText = +quantityEl.innerText + 1;
     }
 }
 
