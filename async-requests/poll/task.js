@@ -23,7 +23,7 @@ function renderPoll( { id, data: { title, answers } } ) {
   answers.forEach((answer, id) => {
     const answerTemplate = getAnswerTemplate(answer, id);
     pollAnswers.insertAdjacentHTML('beforeend', answerTemplate);
-  })
+  });
 }
 
 function getAnswerTemplate(answer, id) {
@@ -49,7 +49,7 @@ function onPollAnswersClick(e) {
         const response = JSON.parse(xhr.responseText);
         const template = renderStatistic(response);
         pollAnswers.innerHTML = template;
-      }
+      };
     });
     xhr.send(`vote=${pollId}&answer=${answerId}`);
   }
