@@ -7,15 +7,17 @@ function onLoad() {
   const isClosed = isModalCloseTrue();
 
   if (!isClosed) {
-    setTimeout(() => {
-      modal.classList.add('modal_active');
-    }, 1000);
+    modal.classList.add('modal_active');
   };
 }
 
 function isModalCloseTrue() {
-  let cookie = document.cookie.split('; ').map((c) => c.split('=')).find((c) => c[0] == 'modalclose');
-  return cookie ? cookie[1] : null;
+  let cookiePair = document.cookie
+    .split('; ')
+    .map((c) => c.split('='))
+    .find((c) => c[0] == 'modalclose');
+    
+  return cookiePair && cookiePair[1] == 'true' ? true : false;
 }
 
 function onModalClick(e) {
