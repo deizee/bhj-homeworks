@@ -1,23 +1,23 @@
 const textarea = document.getElementById('editor');
-const btn = document.getElementById('clear-btn');
+const clearButtonElement = document.getElementById('clear-btn');
 
 // Events
 document.addEventListener('DOMContentLoaded', onLoad);
 textarea.addEventListener('input', onTextareaBlur);
-btn.addEventListener('click', onBtnClick);
+clearButtonElement.addEventListener('click', onBtnClick);
 
 // Handlers
 function onLoad() {
-  let text = localStorage.getItem('MyText') || '';
+  let text = localStorage.getItem('text');
   textarea.value = text;
 }
 
 function onTextareaBlur() {
   let text = textarea.value;
-  localStorage.setItem('MyText', text);
+  localStorage.setItem('text', text);
 }
 
 function onBtnClick() {
   textarea.value = '';
-  localStorage.setItem('MyText', '');
+  localStorage.setItem('text', '');
 }
