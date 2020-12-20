@@ -28,6 +28,14 @@ body {
   cursor: pointer;
 }
 
+.btn_logout {
+  display: none;
+  background: red; 
+}
+.logout_active {
+  display: block;
+}
+
 .welcome {
   display: none;
 }
