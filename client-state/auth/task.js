@@ -26,7 +26,7 @@ function onSubmitBtnClick(e) {
   xhr.open('POST', 'https://netology-slow-rest.herokuapp.com/auth.php');
 
   xhr.addEventListener('readystatechange', function () {
-    if (xhr.readyState == xhr.DONE && Math.floor(xhr.status / 100) == 2) {
+    if (xhr.readyState == xhr.DONE) {
       const response = JSON.parse(xhr.responseText);
       if (response.success) {
         showWelcome(response.user_id);
