@@ -19,5 +19,5 @@ function onTextareaBlur() {
 
 function onBtnClick() {
   textarea.value = '';
-  localStorage.setItem('text', '');
+  localStorage.removeItem('text');
 }
